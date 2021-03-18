@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-intro(){	
+void intro(){	
 	
 	printf(" ------------------------------------------------------------- \n");
 	printf("|                          AGENDA                             |\n");
