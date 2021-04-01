@@ -12,6 +12,8 @@ intro(){
     printf("| 2 - Exibir Contatos                                         |\n");
     printf("|_____________________________________________________________|\n");
     printf("| 3 - Procurar Contato                                        |\n");
+    printf("|_____________________________________________________________|\n");
+    printf("| 4 - Alterar Contato                                         |\n");
 	printf("|_____________________________________________________________|\n");
 	
 }
@@ -31,7 +33,7 @@ typedef struct Cliente{
 int main() {
 	//Declara��o de Vari�veis
 	Pessoa a[10];
-	int controle = 0, esc, esc2 = 0,i=0,j=0, m=0, n=0;
+	int controle = 0, esc, esc2 = 0,i=0,j=0, m=0, n=0, controlBuscaUser = 0;
 	char control[200],name_esc[200];
 	
 	//INSTANCIANDO VALORES PRIMARIOS DO VETOR
@@ -68,18 +70,22 @@ int main() {
                         printf("Nome: ");
                         fgets(a[i].nome, 200, stdin); //recebendo nome do usu�rio
                         fflush(stdin);
+                        printf("\n");
                         
                         printf("Data de Nascimento: ");
                         fgets(a[i].data_nasc, 20, stdin);//recebendo data de nascimento
                         fflush(stdin);
+                        printf("\n");
 
                         printf("Numero: ");
                         fgets(a[i].numero, 30, stdin); //recebendo valor do n�mero
                         fflush(stdin);
+                        printf("\n");
 
                         printf("Obs: ");
                         fgets(a[i].observacoes, 300, stdin); //recebendo valor da cidade
                         fflush(stdin);
+                        printf("\n");
 
                         printf("Deseja adicionar mais contatos? (1-SIM | 2-NAO)\n.: "); 
                         scanf("%i", &esc2); //colhendo a informa��o se o usu�rio deseja adicionar mais contatos
@@ -134,14 +140,15 @@ int main() {
                         printf("|------------------------------------------------------------|\n");
 						printf("| Observacoes: %s \n",a[i].observacoes);
                         printf("|____________________________________________________________|\n\n\n");
+
 					}
                 }
 				system("pause");
 				system("cls");
             break;
 
-            case 3:
-                
+            case 3: // VARIAVEL CONTROLE PARA VALIDAR A BUSCA BEM SUCEDIDA DO USUARIO DESEJADO
+                controlBuscaUser = 0;
             
                 printf("_____________________________________________________________\n");
                 printf("|                     Procurar Contato                       |\n");
@@ -167,6 +174,8 @@ int main() {
 
                     if(strcmp(a[i].nome, name_esc) == 0)
 					{
+                        controlBuscaUser = 1;
+
                         printf("_____________________________________________________________\n");
                     	printf("| Contato %i                                                  |\n",i+1);
                     	printf("|____________________________________________________________|\n");
@@ -178,11 +187,10 @@ int main() {
                         printf("|------------------------------------------------------------|\n");
 						printf("| Observacoes: %s \n",a[i].observacoes);
                         printf("|____________________________________________________________|\n\n\n");
-                        
                     }
                     else
 					{
-                        if(i==9){
+                        if(i==9 && controlBuscaUser == 0){
                             printf("Usuario nao encontrado\n");
                             goto fim;
                         }
@@ -190,6 +198,79 @@ int main() {
 					}
                 }
                 fim:
+                system("pause");
+                system("cls");
+            break;
+
+            case 4:
+            controlBuscaUser = 0;  // VARIAVEL CONTROLE PARA VALIDAR A BUSCA BEM SUCEDIDA DO USUARIO DESEJADO
+
+                printf("_____________________________________________________________\n");
+                printf("|                       Alterar Contato                      |\n");
+                printf("|____________________________________________________________|\n");
+                printf("|Nome: ");
+
+                fflush(stdin);
+                fgets(name_esc, 200, stdin);
+
+                printf("\n|procurando ...\n\n");
+                system("pause");
+                system("cls");
+
+                m = strlen(name_esc);
+                name_esc[m-1] = "\0";
+
+                for(i=0; i<=9; i++)
+                {
+                	fflush(stdin);   
+
+                    n = strlen(a[i].nome);
+                    a[i].nome[n-1] = "\0";
+
+                    if(strcmp(a[i].nome, name_esc) == 0)
+					{
+                        controlBuscaUser = 1;
+
+                        //          APRESENTANDO DADOS DO USUARIO A SER ALTERADO
+                        printf("_____________________________________________________________\n");
+                    	printf("| Contato %i                                                  |\n",i+1);
+                    	printf("|____________________________________________________________|\n");
+                        printf("| Nome: %s \n",a[i].nome);
+                        printf("|------------------------------------------------------------|\n");
+                        printf("| Numero: %s \n",a[i].numero);
+                        printf("|------------------------------------------------------------|\n");
+						printf("| Data de Nascimento: %s \n",a[i].data_nasc);
+                        printf("|------------------------------------------------------------|\n");
+						printf("| Observacoes: %s \n",a[i].observacoes);
+                        printf("|____________________________________________________________|\n\n\n");
+
+
+                        //      ALTERAÇÃO PROPRIAMENTE DITA DOS DADOS DO USUARIO
+                        printf("Nome: ");
+                        fgets(a[i].nome, 200, stdin); //recebendo nome do usu�rio
+                        fflush(stdin);
+                        
+                        printf("Data de Nascimento: ");
+                        fgets(a[i].data_nasc, 20, stdin);//recebendo data de nascimento
+                        fflush(stdin);
+
+                        printf("Numero: ");
+                        fgets(a[i].numero, 30, stdin); //recebendo valor do n�mero
+                        fflush(stdin);
+
+                        printf("Obs: ");
+                        fgets(a[i].observacoes, 300, stdin); //recebendo valor da cidade
+                        fflush(stdin);
+                        
+                    }
+                    else
+					{
+                        if(i==9 && controlBuscaUser ==0){
+                            printf("Usuario nao encontrado\n");
+                        }  
+					}
+                }
+                printf("Operacao encerrada!\n");
                 system("pause");
                 system("cls");
             break;
